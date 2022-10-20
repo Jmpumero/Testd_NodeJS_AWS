@@ -255,17 +255,36 @@ const content = 'Some content!';
 
 
 //faltan las validaciones 
-let row=formatterRecibo.generateRow(confDoc,docs[1])
 
 
+var logger = fs.createWriteStream('log.txt', {
+  flags: 'a' // 'a' means appending (old data will be preserved)
+})
+const writeLine = (line) => logger.write(`\n${line}`);
+for (let index = 0; index < docs.length; index++) {
+  
+  const row=formatterRecibo.generateRow(confDoc,docs[index])
+  writeLine(row);
+}
+logger.end()
+
+
+
+/*
 try {
   fs.writeFileSync('test.txt', row);
   // file written successfully
 } catch (err) {
   console.error(err);
 }
-
+*/
 //let row= generateRow(confDoc,docs[1])
-console.log(row)
+//console.log(row)
 //luego aqui seria el proceso de actualizar datos
-  
+
+
+//logger.write('some data') // append string to your file
+//logger.write('more data') // again
+//logger.write('and more') // again
+
+
