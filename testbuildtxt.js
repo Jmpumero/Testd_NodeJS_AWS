@@ -1,51 +1,28 @@
 let docs=[
-    {
-      "SDS_SEQUENCE_ID": 2195886,
-      "ID_ZONA": 1001219,
-      "FECHA_RECIBO": "2021-12-17",
-      "CODIGO_DE_CLIENTE": "0505231",
-      "RIF_CLIENTE": "J315648342",
-      "RAZON_SOCIAL_CLIENTE": "CORPORACION VIDOSO C A",
-      "FECHA_PAGO": "2021-12-06",
-      "FORMA_PAGO": "TRANSFERENCIA BS",
-      "NUMERO_REFERENCIA": "00073899",
-      "BANCO": "Mercantil ",
-      "NUMERO_CUENTA_BANCARIA": "01050699905699042245",
-      "OBSERVACIONES": "",
-      "ID_MONEDA": 205,
-      "MONEDA": "BS",
-      "MONTO_DOLAR": "3.90",
-      "MONTO_BS": "18.14",
-      "NRO_RECIBO": "26",
-      "NOMBRE_ZONA": "ZONA 108",
-      "USUARIO_AFV": "febeca549",
-      "VENDEDOR": "ALEXANDRA NAVARRO CYC",
-      "FACTURAS": "\"[06226874]\""
-    },
-    {
-      "SDS_SEQUENCE_ID": 2201499,
-      "ID_ZONA": 1001189,
-      "FECHA_RECIBO": "2021-12-30",
-      "CODIGO_DE_CLIENTE": "1711491",
-      "RIF_CLIENTE": "J407339621",
-      "RAZON_SOCIAL_CLIENTE": "MI TIENDA VENEZUELA, C.A",
-      "FECHA_PAGO": "2021-12-29",
-      "FORMA_PAGO": "TRANSFERENCIA BS",
-      "NUMERO_REFERENCIA": "00085102",
-      "BANCO": "Mercantil ",
-      "NUMERO_CUENTA_BANCARIA": "01050699905699042245",
-      "OBSERVACIONES": "",
-      "ID_MONEDA": 205,
-      "MONEDA": "BS",
-      "MONTO_DOLAR": "267.19",
-      "MONTO_BS": "1223.69",
-      "NRO_RECIBO": "40",
-      "NOMBRE_ZONA": "ZONA 68",
-      "USUARIO_AFV": "febeca549",
-      "VENDEDOR": "ALEXANDRA NAVARRO CYC",
-      "FACTURAS": "\"[06252232, 06252233, 06252234, 06252235]\""
-    }
-  ]
+  {
+    "SDS_SEQUENCE_ID": 2195886,
+    "ID_ZONA": 1001219,
+    "FECHA_RECIBO": "2021-12-17",
+    "CODIGO_DE_CLIENTE": "0505231",
+    "RIF_CLIENTE": "J315648342",
+    "RAZON_SOCIAL_CLIENTE": "CORPORACION VIDOSO C A",
+    "FECHA_PAGO": "2021-12-06",
+    "FORMA_PAGO": "TRANSFERENCIA BS",
+    "NUMERO_REFERENCIA": "00073899",
+    "BANCO": "Mercantil ",
+    "NUMERO_CUENTA_BANCARIA": "01050699905699042245",
+    "OBSERVACIONES": "",
+    "ID_MONEDA": 205,
+    "MONEDA": "BS",
+    "MONTO_DOLAR": "3.90",
+    "MONTO_BS": "18.14",
+    "NRO_RECIBO": "26",
+    "NOMBRE_ZONA": "ZONA 108",
+    "USUARIO_AFV": "febeca549",
+    "VENDEDOR": "ALEXANDRA NAVARRO CYC",
+    "FACTURAS": "\"[06226874]\""
+  }
+]
 
 let confDoc= [
   {
@@ -245,19 +222,31 @@ let confDoc= [
   }
 ]
 
+function getPathBucket(schema){ //por definir cuando se tenga el S3
+    
+  let path=''
+  
+  if(schema==="dbafv"){
+       path='/tmp/recibo_test_dbafv.txt' //para prueba
+  }
+  
+  return path
+}
 
 
 const formatterRecibo = require("./formatter/recibos");
 
 const fs = require('fs');
 
-const content = 'Some content!';
+array.forEach(element => {
+  
+});
 
 
 //faltan las validaciones 
 
 
-var logger = fs.createWriteStream('log.txt', {
+/*var logger = fs.createWriteStream('log.txt', {
   flags: 'a' // 'a' means appending (old data will be preserved)
 })
 const writeLine = (line) => logger.write(`\n${line}`);
@@ -267,24 +256,18 @@ for (let index = 0; index < docs.length; index++) {
   writeLine(row);
 }
 logger.end()
-
-
-
-/*
-try {
-  fs.writeFileSync('test.txt', row);
-  // file written successfully
-} catch (err) {
-  console.error(err);
-}
 */
-//let row= generateRow(confDoc,docs[1])
-//console.log(row)
-//luego aqui seria el proceso de actualizar datos
 
 
-//logger.write('some data') // append string to your file
-//logger.write('more data') // again
-//logger.write('and more') // again
+let row=''
+if(confDoc[0].tipo_documento==1){
+    for (let index = 0; index < docs.length; index++) {
+      
+       row=row+`\n`+formatterRecibo.generateRow(confDoc,docs[index])
+      
+    }
+}
+
+
 
 
